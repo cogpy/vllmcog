@@ -114,9 +114,10 @@ class GoalPlanner:
         )
         
         # Link plan to goal
+        from vllm.opencog.atomspace import AtomType
         goal_node = self.atomspace.get_atom(
             f"goal:{goal_id}",
-            goal_node.atom_type if goal_node else None
+            AtomType.NODE
         )
         if goal_node and plan_node:
             self.atomspace.add_link("achieves", [plan_node, goal_node])

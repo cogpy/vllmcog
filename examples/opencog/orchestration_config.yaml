@@ -1,0 +1,58 @@
+# OpenCog Multi-Agent Orchestration Configuration
+
+# Enable collaboration between agents
+enable_collaboration: true
+
+# Enable learning from experience
+enable_learning: true
+
+# Task timeout in seconds
+task_timeout: 300.0
+
+# Enable metrics collection
+metrics_enabled: true
+
+# Agent pools configuration
+pools:
+  - pool_id: "inference_pool"
+    load_balancing: "least_loaded"
+    max_concurrent_tasks: 50
+    agents:
+      - agent_type: "LLMInferenceAgent"
+        name: "inference_agent_1"
+        model: "meta-llama/Llama-3.1-8B"
+        sampling_params:
+          temperature: 0.7
+          top_p: 0.9
+          max_tokens: 512
+      
+      - agent_type: "LLMInferenceAgent"
+        name: "inference_agent_2"
+        model: "meta-llama/Llama-3.1-8B"
+        sampling_params:
+          temperature: 0.7
+          top_p: 0.9
+          max_tokens: 512
+  
+  - pool_id: "specialized_pool"
+    load_balancing: "round_robin"
+    max_concurrent_tasks: 30
+    agents:
+      - agent_type: "SummarizationAgent"
+        name: "summarizer_1"
+        model: "meta-llama/Llama-3.1-8B"
+        sampling_params:
+          temperature: 0.5
+          max_tokens: 256
+      
+      - agent_type: "QuestionAnsweringAgent"
+        name: "qa_agent_1"
+        model: "meta-llama/Llama-3.1-8B"
+        sampling_params:
+          temperature: 0.3
+          max_tokens: 512
+      
+      - agent_type: "CoordinatorAgent"
+        name: "coordinator_1"
+        metadata:
+          role: "task_coordination"
